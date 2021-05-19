@@ -19,7 +19,7 @@ if (!$mysqli_procedur) {
 }
 
 try {
-    $pdo = new PDO("mysql:host=$servername;dbname=db_toko_sahrul", $username, $password);
+    $pdo = new PDO("mysql:host=$servername;dbname=db_tokosepatu_aldi", $username, $password);
     // set the PDO error mode to exception
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   } catch(PDOException $e) {
