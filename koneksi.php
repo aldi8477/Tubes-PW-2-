@@ -2,7 +2,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$database = "db_toko_sahrul";
+$database = "db_tokosepatu_aldi";
 
 // Create connection
 $mysqli_object = new mysqli($servername, $username, $password, $database);
