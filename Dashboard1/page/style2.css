@@ -1,0 +1,48 @@
+body {
+  padding-top: 50px;
+  padding-bottom: 20px;
+}
+  .buku{
+  width: 250px;
+  height:360px;
+  border:1px solid #dedbd1;
+}
+
+ .clear{
+              clear: both;
+            }
+            ul{
+              
+              list-style-type: none;
+              padding: 0;
+              margin: 0;
+
+            }
+            ul#nav {
+              margin-top: 10px;
+
+            }
+           
+            ul#nav li{
+
+              background:#d74b35;float: left;color:#fff;
+              
+            }
+            ul#nav li a{
+              display: block;padding: 5px 10px;color: #fff;
+              
+            }
+
+            ul#nav li a:hover{ background: rgba(0,0,0,0.3);
+
+            }
+            ul#nav li ul li{
+              float: none;
+
+            }
+            ul#nav li ul{
+              position: absolute;display: none;
+            }
+            ul#nav li:hover ul{
+              display: block;
+          }
