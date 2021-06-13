@@ -38,10 +38,10 @@ CREATE TABLE `tb_login` (
 --
 
 INSERT INTO `tb_login` (`id_user`, `username`, `password`) VALUES
-(9, 'dika', '$2y$10$OSqRQYaTrHt4ZH1BhlOmTuIYIh1Q1HNVhfwmm26v7Jaat08iqKJWa'),
+(9, 'brian', '$2y$10$OSqRQYaTrHt4ZH1BhlOmTuIYIh1Q1HNVhfwmm26v7Jaat08iqKJWa'),
 (10, 'admin', '$2y$10$PRHg8y75qujOTAbJoNv8GuA7cOZio9rV3tQZQx3VPowNBp2UF9Cpy'),
 (11, 'u', '$2y$10$/u7vf6nEuoow/oqpleNyuuxFEbHzvj5wAstAykaAd5JW9efq50QX6'),
-(12, 'sahrul', '$2y$10$HFJd8G1uNmpGuK4qeuB2c.ZuGV.l5fqP8Bx9xjikcPS2lHxJ8k.ca');
+(12, 'aldi', '$2y$10$HFJd8G1uNmpGuK4qeuB2c.ZuGV.l5fqP8Bx9xjikcPS2lHxJ8k.ca');
 
 --
 -- Indexes for dumped tables

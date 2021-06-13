@@ -1,5 +1,5 @@
 <?php
-    $con = new mysqli("localhost", "root", "", "login");
+    $con = new mysqli("localhost", "root", "", "shoes-store");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -45,7 +45,7 @@
         }
 
             $password = password_hash($password, PASSWORD_DEFAULT);
-            $query = $con->query("INSERT INTO tb_login VALUES ('','$username', '$password')");
+            $query = $con->query("INSERT INTO tb_login VALUES ('','$username', '$password' ,3)");
 
         if ($query != 0){
             echo "<script>alert('berhasil')</script>";
