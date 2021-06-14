@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uji coba Ajax</title>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>Nama</th>
+            <td>:</td>
+            <td><input type="text" id="nama"></td>
+        </tr>
+        <tr>
+            <th>Merk Sepatu</th>
+            <td>:</td>
+            <td><input type="text" id="merk_sepatu"></td>
+        </tr>
+        <tr>
+            <th>Size Sepatu</th>
+            <td>:</td>
+            <td><input type="text" id="size_sepatu"></td>
+        </tr>
+        <input type="hidden" id="id">
+        <tr>
+            <td></td>
+            <td></td>
+            <td><button id="btn" onclick="insert()">Submit</button> <button id="btn_update" onclick="update()" hidden>Update</button></td>
+        </tr>
+    </table>
+    <br>
+    
+    <table id="data" border="1">
+        <thead>
+            <th>Nama</th>
+            <th>Merk Sepatu</th>
+            <th>Size Sepatu</th>
+            <th>Aksi</th>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+<script>
+    load();
+
+    function load() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("GET", "tampil.php", true);
+
+        xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+
+                var response = JSON.parse(this.responseText);
+                var empTable = document.getElementById("data").getElementsByTagName("tbody")[0];
+
+                empTable.innerHTML = "";
+
+                for (var key in response) {
+                    if (response.hasOwnProperty(key)) {
+                        var val = response[key];
+
+                        var NewRow = empTable.insertRow(0); 
+                        var nama_cell = NewRow.insertCell(0); 
+                        var merk_sepatu_cell = NewRow.insertCell(1); 
+                        var size_sepatu_cell = NewRow.insertCell(2);
+                        var aksi_cell = NewRow.insertCell(3);
+
+                        nama_cell.innerHTML = val['nama']; 
+                        merk_sepatu_cell.innerHTML = val['merk_sepatu']; 
+                        size_sepatu_cell.innerHTML = val['size_sepatu']; 
+                        aksi_cell.innerHTML = '<button onclick="edit('+ val['id'] +')" id="btn_edit">Edit</button> &bull; <button onclick="hapus('+ val['id'] +')">Hapus</button>'; 
+                        
+                    }
+                } 
+
+            }
+        };
+
+        xhttp.send();
+
+        
+    }
+
+    function insert() {
+
+        var nama = document.getElementById('nama').value;
+        var merk_sepatu = document.getElementById('merk_sepatu').value;
+        var size_sepatu = document.getElementById('size_sepatu').value;
+
+        if(nama != '' && merk_sepatu !='' && size_sepatu != ''){
+
+            var data = {nama: nama, merk_sepatu: merk_sepatu, size_sepatu: size_sepatu};
+            var xhttp = new XMLHttpRequest();
+            xhttp.open("POST", "insert.php", true);
+
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+
+                    var response = this.responseText;
+                    if(response == 1){
+                        alert("Insert successfully.");
+
+                        load();
+                    }
+                }
+            };
+
+        xhttp.setRequestHeader("Content-Type", "application/json");
+
+        xhttp.send(JSON.stringify(data));
+        }
+
+    }
+
+    function edit(id) {
+        var nama = document.getElementById('nama');
+        var merk_sepatu = document.getElementById('merk_sepatu');
+        var size_sepatu = document.getElementById('size_sepatu');
+        var btn = document.getElementById('btn');
+        var btn_edit = document.getElementById('btn_edit');
+        var btn_update = document.getElementById('btn_update');
+        
+        btn.hidden = true;
+        btn_update.hidden = false;
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("GET", "tampil_with_id.php?id="+id, true);
+
+        xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+
+                var response = JSON.parse(this.responseText);
+
+                for (var key in response) {
+                    if (response.hasOwnProperty(key)) {
+                        var val = response[key];
+
+                        nama.value = val['nama']; 
+                        merk_sepatu.value = val['merk_sepatu']; 
+                        size_sepatu.value = val['size_sepatu'];
+                        document.getElementById("id").value = val['id'];
+
+                    }
+                } 
+
+            }
+        };
+
+        xhttp.send();
+    }
+
+    function hapus(id) {
+        var xhttp = new XMLHttpRequest();
+        var konfirmasi = confirm("Yakin ? Mau di Hapus ?");
+
+        if (konfirmasi) {
+            xhttp.open("GET", "hapus.php?id="+id, true);
+
+            xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+
+                    var response = this.responseText;
+                    if(response == 1){
+                        alert("Delete successfully.");
+
+                        load();
+                    }
+
+                }
+            };
+
+            xhttp.send();
+        }
+    }
+
+    function update() {
+
+        var id = document.getElementById('id').value;
+        var nama = document.getElementById('nama').value;
+        var merk_sepatu = document.getElementById('merk_sepatu').value;
+        var size_sepatu = document.getElementById('size_sepatu').value;
+        
+
+        if(nama != '' && merk_sepatu !='' && size_sepatu != ''){
+
+        var data = { id : id, nama : nama, merk_sepatu : merk_sepatu, size_sepatu : size_sepatu };
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("POST", "update.php", true);
+
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+
+                var response = this.responseText;
+                if(response == 1){
+                    alert("Update successfully.");
+
+                    load();
+                }
+            }
+        };
+
+        xhttp.setRequestHeader("Content-Type", "application/json");
+
+        xhttp.send(JSON.stringify(data));
+        }
+    }
+</script>
+</body>
+</html>
